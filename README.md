@@ -1,264 +1,63 @@
-# 📦 Project Setup
+# Module 14 – BREAD Functionality for Calculations (CRUD Operations, Testing & Deployment)
+This project focuses on implementing full BREAD (Browse, Read, Edit, Add, Delete) functionality for calculations within a FastAPI application. The backend uses FastAPI, SQLAlchemy, and Pydantic to manage calculation data tied to authenticated users.
 
----
+Each calculation includes operations (such as addition, subtraction, multiplication, and division) along with operands, and all endpoints are secured so users can only access their own data. The project includes full API support for creating, retrieving, updating, and deleting calculations.
 
-# 🧩 1. Install Homebrew (Mac Only)
+On the frontend side, forms and basic validation were added to allow users to interact with the API. Client-side validation ensures inputs are valid (like checking numeric values and valid operations) before sending requests.
 
-> Skip this step if you're on Windows.
+End-to-end testing was expanded using Playwright to cover both positive and negative scenarios, including successful CRUD operations and handling invalid or unauthorized requests. The application is containerized using Docker and integrated with GitHub Actions for automated testing and deployment.
 
-Homebrew is a package manager for macOS.  
-You’ll use it to easily install Git, Python, Docker, etc.
+## 🧪 How to Run Tests Locally
 
-**Install Homebrew:**
-
+1. Activate virtual environment:
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+source venv/bin/activate
 ```
 
-**Verify Homebrew:**
-
-```bash
-brew --version
-```
-
-If you see a version number, you're good to go.
-
----
-
-# 🧩 2. Install and Configure Git
-
-## Install Git
-
-- **MacOS (using Homebrew)**
-
-```bash
-brew install git
-```
-
-- **Windows**
-
-Download and install [Git for Windows](https://git-scm.com/download/win).  
-Accept the default options during installation.
-
-**Verify Git:**
-
-```bash
-git --version
-```
-
----
-
-## Configure Git Globals
-
-Set your name and email so Git tracks your commits properly:
-
-```bash
-git config --global user.name "Your Name"
-git config --global user.email "your_email@example.com"
-```
-
-Confirm the settings:
-
-```bash
-git config --list
-```
-
----
-
-## Generate SSH Keys and Connect to GitHub
-
-> Only do this once per machine.
-
-1. Generate a new SSH key:
-
-```bash
-ssh-keygen -t ed25519 -C "your_email@example.com"
-```
-
-(Press Enter at all prompts.)
-
-2. Start the SSH agent:
-
-```bash
-eval "$(ssh-agent -s)"
-```
-
-3. Add the SSH private key to the agent:
-
-```bash
-ssh-add ~/.ssh/id_ed25519
-```
-
-4. Copy your SSH public key:
-
-- **Mac/Linux:**
-
-```bash
-cat ~/.ssh/id_ed25519.pub | pbcopy
-```
-
-- **Windows (Git Bash):**
-
-```bash
-cat ~/.ssh/id_ed25519.pub | clip
-```
-
-5. Add the key to your GitHub account:
-   - Go to [GitHub SSH Settings](https://github.com/settings/keys)
-   - Click **New SSH Key**, paste the key, save.
-
-6. Test the connection:
-
-```bash
-ssh -T git@github.com
-```
-
-You should see a success message.
-
----
-
-# 🧩 3. Clone the Repository
-
-Now you can safely clone the course project:
-
-```bash
-git clone <repository-url>
-cd <repository-directory>
-```
-
----
-
-# 🛠️ 4. Install Python 3.10+
-
-## Install Python
-
-- **MacOS (Homebrew)**
-
-```bash
-brew install python
-```
-
-- **Windows**
-
-Download and install [Python for Windows](https://www.python.org/downloads/).  
-✅ Make sure you **check the box** `Add Python to PATH` during setup.
-
-**Verify Python:**
-
-```bash
-python3 --version
-```
-or
-```bash
-python --version
-```
-
----
-
-## Create and Activate a Virtual Environment
-
-(Optional but recommended)
-
-```bash
-python3 -m venv venv
-source venv/bin/activate   # Mac/Linux
-venv\Scripts\activate.bat  # Windows
-```
-
-### Install Required Packages
-
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-# 🐳 5. (Optional) Docker Setup
-
-> Skip if Docker isn't used in this module.
-
-## Install Docker
-
-- [Install Docker Desktop for Mac](https://www.docker.com/products/docker-desktop/)
-- [Install Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/)
-
-## Build Docker Image
-
+3. Start Docker:
 ```bash
-docker build -t <image-name> .
+docker compose up -d
 ```
 
-## Run Docker Container
-
+4. Run tests:
 ```bash
-docker run -it --rm <image-name>
+pytest
 ```
 
 ---
 
-# 🚀 6. Running the Project
+## 🐳 Docker Hub Repository
 
-- **Without Docker**:
-
-```bash
-python main.py
-```
-
-(or update this if the main script is different.)
-
-- **With Docker**:
-
-```bash
-docker run -it --rm <image-name>
-```
+https://hub.docker.com/repository/docker/drew2026000000/assignment14/general
 
 ---
 
-# 📝 7. Submission Instructions
+## 📸 Screenshots
 
-After finishing your work:
+### GitHub Actions
+![GitHub Actions](github_actions.png)
 
-```bash
-git add .
-git commit -m "Complete Module X"
-git push origin main
-```
+### Docker
+![Docker](docker.png)
 
-Then submit the GitHub repository link as instructed.
-
----
-
-# 🔥 Useful Commands Cheat Sheet
-
-| Action                         | Command                                          |
-| ------------------------------- | ------------------------------------------------ |
-| Install Homebrew (Mac)          | `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` |
-| Install Git                     | `brew install git` or Git for Windows installer |
-| Configure Git Global Username  | `git config --global user.name "Your Name"`      |
-| Configure Git Global Email     | `git config --global user.email "you@example.com"` |
-| Clone Repository                | `git clone <repo-url>`                          |
-| Create Virtual Environment     | `python3 -m venv venv`                           |
-| Activate Virtual Environment   | `source venv/bin/activate` / `venv\Scripts\activate.bat` |
-| Install Python Packages        | `pip install -r requirements.txt`               |
-| Build Docker Image              | `docker build -t <image-name> .`                |
-| Run Docker Container            | `docker run -it --rm <image-name>`               |
-| Push Code to GitHub             | `git add . && git commit -m "message" && git push` |
+### Application Running in Browser:
+![Application](application.png)
 
 ---
 
-# 📋 Notes
+## 📸 Reflection
 
-- Install **Homebrew** first on Mac.
-- Install and configure **Git** and **SSH** before cloning.
-- Use **Python 3.10+** and **virtual environments** for Python projects.
-- **Docker** is optional depending on the project.
+This assignment helped me understand how to fully implement CRUD functionality in a real application. Instead of just building endpoints, I had to make sure everything worked together, including authentication, database operations, and frontend interaction.
 
----
+Working on the BREAD endpoints made it clearer how data flows between the user, API, and database. I also had to make sure that users could only access their own calculations, which reinforced how important proper authorization is.
 
-# 📎 Quick Links
+One of the main challenges I ran into was dealing with environment and dependency issues, especially when running tests locally versus in GitHub Actions. Fixing those issues helped me understand how CI/CD environments work and why dependencies need to be consistent.
 
-- [Homebrew](https://brew.sh/)
-- [Git Downloads](https://git-scm.com/downloads)
-- [Python Downloads](https://www.python.org/downloads/)
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-- [GitHub SSH Setup Guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+The Playwright tests were also useful because they simulate real user behavior instead of just testing individual functions. This made it easier to verify that the full application flow was working correctly.
+
+Overall, this assignment tied together backend development, API design, testing, and deployment. It felt more like building a complete application rather than just individual features.
