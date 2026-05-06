@@ -37,7 +37,7 @@ from app.models.calculation import Calculation  # Database model for calculation
 from app.models.user import User  # Database model for users
 from app.schemas.calculation import CalculationBase, CalculationResponse, CalculationUpdate  # API request/response schemas
 from app.schemas.token import TokenResponse  # API token schema
-from app.schemas.user import UserCreate, UserResponse, UserLogin  # User schemas
+from app.schemas.user import UserCreate, UserResponse, UserLogin, UserUpdate, PasswordUpdate  # User schemas
 from app.database import Base, get_db, engine  # Database connection
 
 
@@ -126,6 +126,11 @@ def dashboard_page(request: Request):
     JavaScript in this page calls the API endpoints to fetch and display data.
     """
     return templates.TemplateResponse("dashboard.html", {"request": request})
+
+@app.get("/profile", response_class=HTMLResponse, tags=["web"])
+def profile_page(request: Request):
+    """Profile page for updating user information and password."""
+    return templates.TemplateResponse("profile.html", {"request": request})
 
 @app.get("/dashboard/view/{calc_id}", response_class=HTMLResponse, tags=["web"])
 def view_calculation_page(request: Request, calc_id: str):
@@ -255,7 +260,65 @@ def login_form(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = D
         "token_type": "bearer"
     }
 
+# ------------------------------------------------------------------------------
+# User Profile Endpoints
+# ------------------------------------------------------------------------------
 
+@app.get("/users/me", response_model=UserResponse, tags=["users"])
+def get_my_profile(current_user=Depends(get_current_active_user)):
+    """Get the current logged-in user's profile."""
+    return current_user
+
+
+@app.put("/users/me", response_model=UserResponse, tags=["users"])
+def update_my_profile(
+    user_update: UserUpdate,
+    current_user=Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Update the current user's profile information."""
+    update_data = user_update.model_dump(exclude_unset=True)
+
+    if "username" in update_data:
+        existing_user = db.query(User).filter(
+            User.username == update_data["username"],
+            User.id != current_user.id
+        ).first()
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Username already exists")
+
+    if "email" in update_data:
+        existing_user = db.query(User).filter(
+            User.email == update_data["email"],
+            User.id != current_user.id
+        ).first()
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Email already exists")
+
+    current_user.update(**update_data)
+    db.commit()
+    db.refresh(current_user)
+
+    return current_user
+
+
+@app.put("/users/me/password", tags=["users"])
+def change_my_password(
+    password_update: PasswordUpdate,
+    current_user=Depends(get_current_active_user),
+    db: Session = Depends(get_db)
+):
+    """Change the current user's password after verifying current password."""
+    if not current_user.verify_password(password_update.current_password):
+        raise HTTPException(status_code=400, detail="Current password is incorrect")
+
+    current_user.password = User.hash_password(password_update.new_password)
+    current_user.updated_at = datetime.now(timezone.utc)
+
+    db.commit()
+
+    return {"message": "Password updated successfully"}
+    
 # ------------------------------------------------------------------------------
 # Calculations Endpoints (BREAD)
 # ------------------------------------------------------------------------------
