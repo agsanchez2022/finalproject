@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>User Profile</h1>
+
+    <div id="message"></div>
+
+    <h2>Update Profile Information</h2>
+
+    <form id="profile-form">
+        <label>First Name</label>
+        <input type="text" id="first_name" required>
+
+        <label>Last Name</label>
+        <input type="text" id="last_name" required>
+
+        <label>Email</label>
+        <input type="email" id="email" required>
+
+        <label>Username</label>
+        <input type="text" id="username" required>
+
+        <button type="submit">Update Profile</button>
+    </form>
+
+    <hr>
+
+    <h2>Change Password</h2>
+
+    <form id="password-form">
+        <label>Current Password</label>
+        <input type="password" id="current_password" required>
+
+        <label>New Password</label>
+        <input type="password" id="new_password" required>
+
+        <label>Confirm New Password</label>
+        <input type="password" id="confirm_new_password" required>
+
+        <button type="submit">Change Password</button>
+    </form>
+
+    <br>
+
+    <a href="/dashboard">Back to Dashboard</a>
+</div>
+
+<script src="/static/js/profile.js"></script>
+
+</body>
+</html>
