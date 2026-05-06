@@ -1,11 +1,23 @@
-# Module 14 – BREAD Functionality for Calculations (CRUD Operations, Testing & Deployment)
-This project focuses on implementing full BREAD (Browse, Read, Edit, Add, Delete) functionality for calculations within a FastAPI application. The backend uses FastAPI, SQLAlchemy, and Pydantic to manage calculation data tied to authenticated users.
+# Final Project – Full-Stack FastAPI Calculator Application with User Profile Management
 
-Each calculation includes operations (such as addition, subtraction, multiplication, and division) along with operands, and all endpoints are secured so users can only access their own data. The project includes full API support for creating, retrieving, updating, and deleting calculations.
+This project builds on the previous calculator API application by expanding the platform into a more complete full-stack web application with authenticated user management, calculation history tracking, BREAD functionality, testing, and containerized deployment.
 
-On the frontend side, forms and basic validation were added to allow users to interact with the API. Client-side validation ensures inputs are valid (like checking numeric values and valid operations) before sending requests.
+The backend was developed using FastAPI, SQLAlchemy, and Pydantic. Users can securely register, log in, and manage their own calculations through authenticated API endpoints. Each calculation supports mathematical operations such as addition, subtraction, multiplication, and division, while ensuring users can only access and modify their own data.
 
-End-to-end testing was expanded using Playwright to cover both positive and negative scenarios, including successful CRUD operations and handling invalid or unauthorized requests. The application is containerized using Docker and integrated with GitHub Actions for automated testing and deployment.
+The application implements full BREAD (Browse, Read, Edit, Add, Delete) functionality for calculations. Users can create calculations, view previous results, edit existing calculations, and delete records directly through the web interface.
+
+As part of the final project enhancements, a new user profile management feature was added. Authenticated users can now:
+- View their account information
+- Update profile details such as username, email, and name
+- Securely change their password
+
+The frontend uses HTML templates, JavaScript, and FastAPI routing to provide a user-friendly interface for interacting with backend APIs. Client-side validation was added to improve usability and prevent invalid data submissions before requests are sent to the backend.
+
+Testing was completed using both Pytest and Playwright. The project includes unit tests, integration tests, and end-to-end browser testing to validate API behavior, authentication flows, and frontend functionality. GitHub Actions was configured to automate testing and CI/CD workflows.
+
+The application is containerized using Docker and managed through Docker Compose for consistent local development and deployment environments.
+
+---
 
 ## 🧪 How to Run Tests Locally
 
@@ -48,16 +60,17 @@ https://hub.docker.com/repository/docker/drew2026000000/assignment14/general
 ### Application Running in Browser:
 ![Application](application.png)
 
+![Application](application1.png)
+
+![Application](application2.png)
+
 ---
 
 ## 📸 Reflection
 
-This assignment helped me understand how to fully implement CRUD functionality in a real application. Instead of just building endpoints, I had to make sure everything worked together, including authentication, database operations, and frontend interaction.
-
-Working on the BREAD endpoints made it clearer how data flows between the user, API, and database. I also had to make sure that users could only access their own calculations, which reinforced how important proper authorization is.
-
-One of the main challenges I ran into was dealing with environment and dependency issues, especially when running tests locally versus in GitHub Actions. Fixing those issues helped me understand how CI/CD environments work and why dependencies need to be consistent.
-
-The Playwright tests were also useful because they simulate real user behavior instead of just testing individual functions. This made it easier to verify that the full application flow was working correctly.
-
-Overall, this assignment tied together backend development, API design, testing, and deployment. It felt more like building a complete application rather than just individual features.
+This project helped reinforce how a full-stack application works from both the backend and frontend perspectives. Instead of only creating API endpoints, I had to connect authentication, database operations, frontend interaction, testing, and deployment into one complete application.
+One of the biggest improvements added during the final project was the user profile management feature. Implementing profile updates and password change functionality helped me better understand authentication workflows, secure password handling, and protected routes within FastAPI applications.
+Working with BREAD operations also helped me better understand how data flows between the frontend, API layer, and database. Since calculations were tied to authenticated users, I also had to make sure authorization was handled properly so users could only access their own records.
+Another important part of the project was testing. Pytest and Playwright helped verify both backend functionality and real user interaction flows. Running tests through GitHub Actions also showed the importance of CI/CD pipelines and maintaining stable environments between local development and automated deployments.
+Docker and Docker Compose made it easier to keep dependencies and services consistent across environments, especially when working with PostgreSQL and automated testing.
+Overall, this project brought together backend development, frontend integration, authentication, testing, containerization, and deployment into a single application. It felt much closer to building a real-world software project rather than completing isolated assignments.
